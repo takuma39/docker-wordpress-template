@@ -5,27 +5,32 @@ services:
     container_name: "wordpress-db"
     image: mariadb:latest
     volumes:
-      - ./db-data:/var/lib/mysql
+      - ./db/data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-wordpress}
-      MYSQL_USER: ${MYSQL_USER:-wordpress}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-wordpress}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: "Asia/Tokyo"
     
   wordpress:
+    depends_on:
+      - db
     container_name: "wordpress-wp"
     image: wordpress:latest
     volumes:
-      - ./source:/var/www/html
+      - ./src:/var/www/html
     ports:
       - "8000:80"
     environment:
-      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST:-db:3306}
-      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wordpress}
-      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wordpress}
-      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME:-wordpress}
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
 
   adminer:
+    depends_on:
+      - db
     container_name: "adminer-app"
     image: adminer:latest
     ports:

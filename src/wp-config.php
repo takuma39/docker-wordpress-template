@@ -32,10 +32,10 @@ define( 'DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD'));
 define( 'DB_HOST', getenv('WORDPRESS_DB_HOST'));
 
 /** Database charset to use in creating database tables. */
-define( 'DB_CHARSET', getenv('WORDPRESS_DB_CHARSET'));
+define( 'DB_CHARSET', 'utf8' );
 
 /** The database collate type. Don't change this if in doubt. */
-define( 'DB_COLLATE', getenv('WORDPRESS_DB_COLLATE'));
+define( 'DB_COLLATE', '' );
 
 /**#@+
  * Authentication unique keys and salts.
